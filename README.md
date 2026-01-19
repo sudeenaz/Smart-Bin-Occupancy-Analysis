@@ -93,17 +93,17 @@ Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin 
 ## Grafikler
 
 ### Konteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)
-![Konteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)](images/pivot analizinin ısı haritası.png)
+![Konteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)](images/pivot_analizinin_ısı_haritası.png)
 
 -Bu grafik, yaptığımız Pivot analizinin görsel bir özetidir. Renkler koyulaştıkça o konteyner ve atık tipinin doluluk oranının arttığını görüyoruz.
 
 ### Model Başarı Karşılaştırması
-![Model Başarı Karşılaştırması](images/model başarı karşılaştırması .png)
+![Model Başarı Karşılaştırması](images/model_başarı_karşılaştırması .png)
 
 -Random Forest ve KNN modellerinin doğruluk skorlarını yan yana koyarak hangisinin daha "akıllı" olduğunu karşılaştırdık.
 
 ### Random Forest - Karmaşıklık Matrisi (Confusion Matrix)
-![Random Forest - Karmaşıklık Matrisi (Confusion Matrix)](images/RF karmaşıklık matrisi.png)
+![Random Forest - Karmaşıklık Matrisi (Confusion Matrix)](images/RF_karmaşıklık_matrisi.png)
 
 -Bu matris, modelin nerede hata yaptığını tane tane gösterir. Sol üst ve sağ alt köşedeki büyük sayılar, modelin "Boşaltılmalı" dediği ve gerçekten boşaltılması gereken veya "Boş" dediği ve gerçekten boş olan kutuları temsil eder.
 
