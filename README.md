@@ -97,10 +97,12 @@ Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin 
 
 -Bu grafik, yaptığımız Pivot analizinin görsel bir özetidir. Renkler koyulaştıkça o konteyner ve atık tipinin doluluk oranının arttığını görüyoruz.
 
+
 ### Model Başarı Karşılaştırması
 ![Model Başarı Karşılaştırması](images/model_başarı_karşılaştırması.png)
 
 -Random Forest ve KNN modellerinin doğruluk skorlarını yan yana koyarak hangisinin daha "akıllı" olduğunu karşılaştırdık.
+
 
 ### Random Forest - Karmaşıklık Matrisi (Confusion Matrix)
 ![Random Forest - Karmaşıklık Matrisi (Confusion Matrix)](images/RF_karmaşıklık_matrisi.png)
