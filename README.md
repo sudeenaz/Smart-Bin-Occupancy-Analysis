@@ -86,24 +86,24 @@ Test sonuçlarına göre Random Forest Classifier modeli, %94 gibi yüksek bir d
 Yapılan pivot tablo analizleri, her konteyner tipinin her atık türünde aynı hızda dolmadığını göstermiştir. Örneğin, belirli konteyner tiplerinin "Mixed" atık türünde %70'in üzerinde doluluk ortalamasına ulaştığı gözlemlenmiştir. Bu bilgi, belediyelerin sadece doluluk oranına göre değil, dolma hızına göre de dinamik rota planlaması yapabileceğini ortaya koymaktadır.
 
 **Özelliklerin Etkisi (Feature Importance)**  
-Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin ($FL\_B$) yanında, geçmişe dönük verilerin ($FL\_B\_12$) de tahmin başarısında kritik rol oynadığı görülmüştür. Bu da sistemin sadece anlık değil, zamansal değişimleri de takip ederek daha tutarlı kararlar verdiğini gösterir.
+Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin yanında, geçmişe dönük verilerin de tahmin başarısında kritik rol oynadığı görülmüştür. Bu da sistemin sadece anlık değil, zamansal değişimleri de takip ederek daha tutarlı kararlar verdiğini gösterir.
 
 ---
 
 ## Grafikler
 
 ### Konteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)
-![Konteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)](pivot analizinin ısı haritası.png)
+![Konteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)](images/pivot analizinin ısı haritası.png)
 
 -Bu grafik, yaptığımız Pivot analizinin görsel bir özetidir. Renkler koyulaştıkça o konteyner ve atık tipinin doluluk oranının arttığını görüyoruz.
 
 ### Model Başarı Karşılaştırması
-![Model Başarı Karşılaştırması](model başarı karşılaştırması .png)
+![Model Başarı Karşılaştırması](images/model başarı karşılaştırması .png)
 
 -Random Forest ve KNN modellerinin doğruluk skorlarını yan yana koyarak hangisinin daha "akıllı" olduğunu karşılaştırdık.
 
 ### Random Forest - Karmaşıklık Matrisi (Confusion Matrix)
-![Random Forest - Karmaşıklık Matrisi (Confusion Matrix)](RF karmaşıklık matrisi.png)
+![Random Forest - Karmaşıklık Matrisi (Confusion Matrix)](images/RF karmaşıklık matrisi.png)
 
 -Bu matris, modelin nerede hata yaptığını tane tane gösterir. Sol üst ve sağ alt köşedeki büyük sayılar, modelin "Boşaltılmalı" dediği ve gerçekten boşaltılması gereken veya "Boş" dediği ve gerçekten boş olan kutuları temsil eder.
 
