@@ -1,1 +1,122 @@
-🗑️ Smart Bin Occupancy & Emptying PredictionBu proje, akıllı şehir teknolojileri kapsamında çöp konteynerlerinin doluluk oranlarını analiz etmek ve boşaltma kararlarını optimize etmek için hazırlanmış bir makine öğrenmesi çalışmasıdır. Hedefimiz, sensör verilerini kullanarak verimli bir atık toplama yönetimi sağlamaktır.Proje AmacıAkıllı atık yönetimi, şehirlerdeki operasyonel maliyetleri düşürmek ve çevre kirliliğini önlemek için kritik öneme sahiptir. Bu proje ile amaçlananlar:Konteyner doluluk seviyelerini etkileyen faktörleri analiz etmek.Pivot Tablo analizi ile konteyner tipi ve atık türü arasındaki doluluk ilişkisini ortaya koymak.Farklı makine öğrenmesi algoritmalarıyla (RF ve KNN) "Boşaltma Kararı" tahmini yapmak.Bu sayede belediyeler ve atık yönetim firmaları dolmayan kutulara gitmeyerek yakıt ve zaman tasarrufu sağlayabilir.Veri SetiVeri seti, akıllı çöp kutularından alınan sensör verilerini ve konteyner özelliklerini içermektedir.Kolonlar:Class: Boşaltma durumu (Emptying / Non-Emptying) — Hedef Değişken (y)FL_B: Güncel doluluk oranı (B Sensörü)FL_A: Güncel doluluk oranı (A Sensörü)VS: Hacimsel sensör verisiFL_B_3: 3 saat önceki doluluk verisiFL_B_12: 12 saat önceki doluluk verisiContainer Type: Konteynerin yapısal tipi (Cubic, Diamond, vb.)Recyclable fraction: Atık türü (Mixed, Recyclable, vb.)Model PerformansıModelAccuracy (Doğruluk)Başarı YorumuRandom Forest Classifier%94En yüksek performansK-Nearest Neighbors (KNN)%89Yüksek performans (Scaling ile)Sonuç ve Model KarşılaştırmasıBu çalışmada, konteynerlerin boşaltılma durumunu tahmin etmek için iki farklı supervised (denetimli) makine öğrenimi modeli kullanılmıştır:Random Forest ClassifierK-Nearest Neighbors (KNN)Her model aynı eğitim/test veri seti üzerinde değerlendirilmiş ve doğruluk (accuracy) skorları karşılaştırılmıştır.Veri Ön İşleme ve Teknik Açıklamalar1. Pivot Tablo Analizi (Kritik Adım)Hocamızın belirttiği üzere "Pivot yapılmadan puan yok" ilkesinden yola çıkarak; hangi konteynerin hangi atık türünde ne kadar dolduğunu anlamak için pivot analizi yapılmıştır. Bu adım, ham veriyi anlamlandırmamızı ve model kurmadan önce doluluk eğilimlerini görmemizi sağlamıştır. Analiz sonucunda bazı konteyner tiplerinin belirli atıklarla çok daha hızlı dolduğu netleşmiştir.2. Label Encoding (Etiket Kodlama)Container Type ve Recycle gibi metin tabanlı veriler, bilgisayarın anlayabileceği sayısal değerlere dönüştürülmüştür. 14 farklı kategori olduğu için tabloyu şişirmeyen bu yöntem tercih edilmiştir.3. StandardScaler (Ölçeklendirme)Neden Yaptık? KNN algoritması mesafe tabanlı çalıştığı için, büyük sayısal değerlerin (örn: 90 olan FL_B) küçük değerli etiketleri (örn: 1 olan kategori) domine etmemesi amacıyla tüm özellikler aynı ölçeğe getirilmiştir. Bu adım KNN'in başarısı için zorunludur.Model Performanslarının YorumlanmasıK-Nearest Neighbors (KNN)Mesafe tabanlı bir modeldir. Verilerin ölçeklendirilmesine (Scaling) ihtiyaç duyar. %89 başarı oranıyla güçlü bir performans göstermiş olsa da Random Forest'ın gerisinde kalmıştır.Random Forest Classifier%94 doğruluk oranıyla projenin en başarılı modeli olmuştur.Neden Başarılı? Doğrusal olmayan karmaşık ilişkileri (farklı konteyner ve atık türü kombinasyonları) karar ağaçları yapısı sayesinde en iyi şekilde yakalamıştır. Aykırı değerlere karşı daha dayanıklıdır.GrafiklerKonteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)Isı haritası, hangi konteyner ve atık tipi kombinasyonlarının en yüksek doluluk ortalamasına sahip olduğunu görselleştirir.Model Başarı KarşılaştırmasıRandom Forest ve KNN modellerinin doğruluk oranlarını yan yana karşılaştırır.Random Forest - Karmaşıklık Matrisi (Confusion Matrix)Modelin "Boşaltılmalı" ve "Boşaltılmamalı" sınıflarını ne kadar isabetli tahmin ettiğini, nerelerde yanıldığını gösterir.Özellik Önem Sıralaması (Feature Importance)Modelin boşaltma kararı verirken hangi sensör verisine (örn: FL_B) daha çok güvendiğini ortaya koyar.Nasıl ÇalıştırılırSmart_Bin.csv dosyasını proje klasörüne koyun.Gerekli kütüphaneleri yükleyin: pip install pandas numpy matplotlib seaborn scikit-learnKod dosyasını çalıştırın. Grafikler otomatik olarak üretilecektir.Grafikleri README içinde görmek için üretilen .png dosyalarını GitHub reponuzun ana dizinine yüklemeyi unutmayın.Lisans & KaynakVeri seti: Smart Bin Sensor DataBu çalışma Bursa Teknik Üniversitesi Makine Öğrenmesi dersi kapsamında hazırlanmıştır.
+# Smart Bin Occupancy & Emptying Prediction
+
+Bu proje, akıllı şehir teknolojileri kapsamında çöp konteynerlerinin doluluk oranlarını analiz etmek ve boşaltma kararlarını optimize etmek için hazırlanmış bir makine öğrenmesi çalışmasıdır. Hedefimiz, sensör verilerini kullanarak verimli bir atık toplama yönetimi sağlamaktır.
+
+---
+
+## Proje Amacı
+
+Akıllı atık yönetimi, şehirlerdeki operasyonel maliyetleri düşürmek ve çevre kirliliğini önlemek için kritik öneme sahiptir. Bu proje ile amaçlananlar:
+
+1. Konteyner doluluk seviyelerini etkileyen faktörleri analiz etmek.
+2. Pivot Tablo analizi ile konteyner tipi ve atık türü arasındaki doluluk ilişkisini ortaya koymak.
+3. Farklı makine öğrenmesi algoritmalarıyla (RF ve KNN) "Boşaltma Kararı" tahmini yapmak.
+
+Bu sayede belediyeler ve atık yönetim firmaları dolmayan kutulara gitmeyerek yakıt ve zaman tasarrufu sağlayabilir.
+
+---
+
+## Veri Seti
+
+Veri seti, akıllı çöp kutularından alınan sensör verilerini ve konteyner özelliklerini içermektedir.
+
+Kolonlar:
+
+- Class: Boşaltma durumu (Emptying / Non-Emptying) — Hedef Değişken (y)
+- FL_B: Güncel doluluk oranı (B Sensörü)
+- FL_A: Güncel doluluk oranı (A Sensörü)
+- VS: Hacimsel sensör verisi
+- FL_B_3: 3 saat önceki doluluk verisi
+- FL_B_12: 12 saat önceki doluluk verisi
+- Container Type: Konteynerin yapısal tipi (Cubic, Diamond, vb.)
+- Recyclable fraction: Atık türü (Mixed, Recyclable, vb.)
+
+---
+
+## Model Performansı
+
+| Model | Accuracy (Doğruluk) | Başarı Yorumu | 
+|-------|-----:|------:|
+| Random Forest Classifier | %94 | En yüksek performans |
+| K-Nearest Neighbors (KNN)| %89 | Yüksek performans (Scaling ile) |
+
+---
+
+## Sonuç ve Model Karşılaştırması
+Bu çalışmada, konteynerlerin boşaltılma durumunu tahmin etmek için iki farklı supervised (denetimli) makine öğrenimi modeli kullanılmıştır:
+
+- **Random Forest Classifier**  
+- **K-Nearest Neighbors (KNN)**  
+
+Her model aynı eğitim/test veri seti üzerinde değerlendirilmiş ve doğruluk (accuracy) skorları karşılaştırılmıştır.
+
+---
+
+## Veri Ön İşleme ve Teknik Açıklamalar
+
+**1. Pivot Tablo Analizi(Kritik Adım)**  
+Veri setinde onlarca farklı konteyner tipi bulunuyor. Bu kadar büyük bir listeye düz bir şekilde bakarak; "Hangi konteyner daha hızlı doluyor?" veya "Geri dönüştürülebilir atıklar konteyner kapasitesini nasıl etkiliyor?" gibi sorulara cevap vermek imkansızdır.Bu nedenle modelin tahmin edeceği 'Class' (Boşaltma Kararı) değişkeninin arkasındaki ana sebepler (Konteyner Tipi ve Atık Türü arasındaki ilişki) matematiksel olarak özetlenmiş oldu. Pivot tablo kullanılmasaydı, elimizdeki veriler sadece birbirinden kopuk sayılar yığını olarak kalacaktı.
+
+**2. Label Encoding (Etiket Kodlama)**  
+Container Type ve Recycle gibi metin tabanlı veriler, bilgisayarın anlayabileceği sayısal değerlere dönüştürülmüştür. 14 farklı kategori olduğu için tabloyu şişirmeyen bu yöntem tercih edilmiştir.
+
+**3. StandardScaler (Ölçeklendirme)**  
+KNN algoritması mesafe tabanlı çalıştığı için, büyük sayısal değerlerin (örn: 90 olan FL_B) küçük değerli etiketleri (örn: 1 olan kategori) domine etmemesi amacıyla tüm özellikler aynı ölçeğe getirilmiştir. Bu adım KNN'in başarısı için zorunludur.
+
+---
+
+## Model Performanslarının Yorumlanması
+
+**K-Nearest Neighbors (KNN)**  
+Mesafe tabanlı bir modeldir. Verilerin ölçeklendirilmesine (Scaling) ihtiyaç duyar. %89 başarı oranıyla güçlü bir performans göstermiş olsa da Random Forest'ın gerisinde kalmıştır.
+
+**Random Forest Classifier**
+%94 doğruluk oranıyla projenin en başarılı modeli olmuştur.
+
+Neden Başarılı? Doğrusal olmayan karmaşık ilişkileri (farklı konteyner ve atık türü kombinasyonları) karar ağaçları yapısı sayesinde en iyi şekilde yakalamıştır. Aykırı değerlere karşı daha dayanıklıdır.
+
+---
+
+## Genel Değerlendirme
+
+**Model Başarısı**  
+Test sonuçlarına göre Random Forest Classifier modeli, %94 gibi yüksek bir doğruluk oranıyla projenin en güvenilir modeli olmuştur. Bu durum, sensör verilerindeki karmaşık ve doğrusal olmayan ilişkilerin (özellikle geçmiş doluluk verileri ile konteyner tipleri arasındaki bağlantıların) ağaç tabanlı modeller tarafından daha iyi yakalandığını kanıtlamaktadır.
+
+**Veri Analizi (Pivot) Önemi**  
+Yapılan pivot tablo analizleri, her konteyner tipinin her atık türünde aynı hızda dolmadığını göstermiştir. Örneğin, belirli konteyner tiplerinin "Mixed" atık türünde %70'in üzerinde doluluk ortalamasına ulaştığı gözlemlenmiştir. Bu bilgi, belediyelerin sadece doluluk oranına göre değil, dolma hızına göre de dinamik rota planlaması yapabileceğini ortaya koymaktadır.
+
+**Özelliklerin Etkisi (Feature Importance)**  
+Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin ($FL\_B$) yanında, geçmişe dönük verilerin ($FL\_B\_12$) de tahmin başarısında kritik rol oynadığı görülmüştür. Bu da sistemin sadece anlık değil, zamansal değişimleri de takip ederek daha tutarlı kararlar verdiğini gösterir.
+
+---
+
+## Grafikler
+
+### Konteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)
+![Konteyner ve Atık Türü İlişkisi (Pivot Isı Haritası)](pivot analizinin ısı haritası.png)
+
+-Bu grafik, yaptığımız Pivot analizinin görsel bir özetidir. Renkler koyulaştıkça o konteyner ve atık tipinin doluluk oranının arttığını görüyoruz.
+
+### Model Başarı Karşılaştırması
+![Model Başarı Karşılaştırması](model başarı karşılaştırması .png)
+
+-Random Forest ve KNN modellerinin doğruluk skorlarını yan yana koyarak hangisinin daha "akıllı" olduğunu karşılaştırdık.
+
+### Random Forest - Karmaşıklık Matrisi (Confusion Matrix)
+![Random Forest - Karmaşıklık Matrisi (Confusion Matrix)](RF karmaşıklık matrisi.png)
+
+-Bu matris, modelin nerede hata yaptığını tane tane gösterir. Sol üst ve sağ alt köşedeki büyük sayılar, modelin "Boşaltılmalı" dediği ve gerçekten boşaltılması gereken veya "Boş" dediği ve gerçekten boş olan kutuları temsil eder.
+
+---
+
+## Nasıl Çalıştırılır
+
+1. `Smart_Bin.csv` dosyasını Colab veya lokal ortama koy.  
+2. Gerekli kütüphaneleri yükleyin: pip install pandas numpy matplotlib seaborn scikit-learn
+3. Kod dosyasını çalıştırın. Grafikler otomatik olarak üretilecektir.
+4. Grafikleri README içinde görmek için üretilen .png dosyalarını GitHub reponuzun ana dizinine yüklemeyi unutmayın.
+
+---
+
+## Licence & Kaynak
+Veri seti: Smart Bin Sensor Data. Bu çalışma Bursa Teknik Üniversitesi Makine Öğrenmesi dersi kapsamında hazırlanmıştır.
