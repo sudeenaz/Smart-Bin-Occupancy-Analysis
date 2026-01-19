@@ -53,7 +53,7 @@ Her model aynı eğitim/test veri seti üzerinde değerlendirilmiş ve doğruluk
 ## Veri Ön İşleme ve Teknik Açıklamalar
 
 **1. Pivot Tablo Analizi(Kritik Adım)**  
-Veri setinde onlarca farklı konteyner tipi bulunuyor. Bu kadar büyük bir listeye düz bir şekilde bakarak; "Hangi konteyner daha hızlı doluyor?" veya "Geri dönüştürülebilir atıklar konteyner kapasitesini nasıl etkiliyor?" gibi sorulara cevap vermek imkansızdır.Bu nedenle modelin tahmin edeceği 'Class' (Boşaltma Kararı) değişkeninin arkasındaki ana sebepler (Konteyner Tipi ve Atık Türü arasındaki ilişki) matematiksel olarak özetlenmiş oldu. Pivot tablo kullanılmasaydı, elimizdeki veriler sadece birbirinden kopuk sayılar yığını olarak kalacaktı.
+Veri setinde onlarca farklı konteyner tipi bulunuyor. Büyük bir listeye düz bir şekilde bakarak; "Hangi konteyner daha hızlı doluyor?" veya "Geri dönüştürülebilir atıklar konteyner kapasitesini nasıl etkiliyor?" gibi sorulara cevap vermek imkansızdır.Bu nedenle modelin tahmin edeceği 'Class' (Boşaltma Kararı) değişkeninin arkasındaki ana sebepler (Konteyner Tipi ve Atık Türü arasındaki ilişki) matematiksel olarak özetlenmiş oldu. Pivot tablo kullanılmasaydı, elimizdeki veriler sadece birbirinden kopuk sayılar yığını olarak kalacaktı.
 
 **2. Label Encoding (Etiket Kodlama)**  
 Metin tabanlı veriler, bilgisayarın anlayabileceği sayısal değerlere dönüştürülmüştür. Çok sayıda farklı kategori olduğu için de Label Encoder tercih edilmiştir.
