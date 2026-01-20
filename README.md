@@ -119,16 +119,3 @@ Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin 
 
 - Modelin karar verirken hangi sensör verisine (özelliğe) daha çok güvendiğini gösteren grafiktir.
 
----
-
-## Nasıl Çalıştırılır
-
-1. `Smart_Bin.csv` dosyasını Colab veya lokal ortama koy.  
-2. Gerekli kütüphaneleri yükleyin: pip install pandas numpy matplotlib seaborn scikit-learn
-3. Kod dosyasını çalıştırın. Grafikler otomatik olarak üretilecektir.
-4. Grafikleri README içinde görmek için üretilen .png dosyalarını GitHub reponuzun ana dizinine yüklemeyi unutmayın.
-
----
-
-## Licence & Kaynak
-Veri seti: Smart Bin Sensor Data. Bu çalışma Bursa Teknik Üniversitesi Makine Öğrenmesi dersi kapsamında hazırlanmıştır.
