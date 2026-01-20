@@ -33,11 +33,11 @@ Kolonlar:
 
 ## Model Performansı
 
-| Model | Accuracy (Doğruluk) | Başarı Yorumu | 
-|-------|-----:|------:|
-| Random Forest Classifier | %94 | En yüksek performans |
-| K-Nearest Neighbors (KNN)| %89 | Yüksek performans (Scaling ile) |
-| Logistic Regression| %87 | Stabil ve hızlı performans |
+| Model | Accuracy (Doğruluk) | F1-Score | Başarı Yorumu | 
+|-------|-----:|------:|------:|
+| Random Forest Classifier | %94 | 0.94 | En yüksek performans |
+| K-Nearest Neighbors (KNN)| %89 | 0.90 | Yüksek performans (Scaling ile) |
+| Logistic Regression| %87 | 0.89 | Stabil ve hızlı performans |
 
 ---
 
