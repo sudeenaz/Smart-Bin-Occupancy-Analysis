@@ -12,8 +12,6 @@ Akıllı atık yönetimi, şehirlerdeki operasyonel maliyetleri düşürmek ve �
 2. Pivot Tablo analizi ile konteyner tipi ve atık türü arasındaki doluluk ilişkisini ortaya koymak.
 3. Farklı makine öğrenmesi algoritmalarıyla (RF ve KNN) "Boşaltma Kararı" tahmini yapmak.
 
-Bu sayede belediyeler ve atık yönetim firmaları dolmayan kutulara gitmeyerek yakıt ve zaman tasarrufu sağlayabilir.
-
 ---
 
 ## Veri Seti
@@ -39,14 +37,16 @@ Kolonlar:
 |-------|-----:|------:|
 | Random Forest Classifier | %94 | En yüksek performans |
 | K-Nearest Neighbors (KNN)| %89 | Yüksek performans (Scaling ile) |
+| Logistic Regression| %87 | Stabil ve hızlı performans |
 
 ---
 
 ## Sonuç ve Model Karşılaştırması
-Bu çalışmada, konteynerlerin boşaltılma durumunu tahmin etmek için iki farklı supervised (denetimli) makine öğrenimi modeli kullanılmıştır:
+Bu çalışmada, konteynerlerin boşaltılma durumunu tahmin etmek için üç farklı supervised (denetimli) makine öğrenimi modeli kullanılmıştır:
 
 - **Random Forest Classifier**  
-- **K-Nearest Neighbors (KNN)**  
+- **K-Nearest Neighbors (KNN)**
+- **Logistic Regression**  
 
 Her model aynı eğitim/test veri seti üzerinde değerlendirilmiş ve doğruluk (accuracy) skorları karşılaştırılmıştır.
 
@@ -55,35 +55,36 @@ Her model aynı eğitim/test veri seti üzerinde değerlendirilmiş ve doğruluk
 ## Veri Ön İşleme ve Teknik Açıklamalar
 
 **1. Pivot Tablo Analizi(Kritik Adım)**  
-Veri setinde onlarca farklı konteyner tipi bulunuyor. Bu kadar büyük bir listeye düz bir şekilde bakarak; "Hangi konteyner daha hızlı doluyor?" veya "Geri dönüştürülebilir atıklar konteyner kapasitesini nasıl etkiliyor?" gibi sorulara cevap vermek imkansızdır.Bu nedenle modelin tahmin edeceği 'Class' (Boşaltma Kararı) değişkeninin arkasındaki ana sebepler (Konteyner Tipi ve Atık Türü arasındaki ilişki) matematiksel olarak özetlenmiş oldu. Pivot tablo kullanılmasaydı, elimizdeki veriler sadece birbirinden kopuk sayılar yığını olarak kalacaktı.
+Veri setinde onlarca farklı konteyner tipi bulunuyor. Büyük bir listeye düz bir şekilde bakarak; "Hangi konteyner daha hızlı doluyor?" veya "Geri dönüştürülebilir atıklar konteyner kapasitesini nasıl etkiliyor?" gibi sorulara cevap vermek imkansızdır.Bu nedenle modelin tahmin edeceği 'Class' (Boşaltma Kararı) değişkeninin arkasındaki ana sebepler (Konteyner Tipi ve Atık Türü arasındaki ilişki) matematiksel olarak özetlenmiş oldu. Pivot tablo kullanılmasaydı, elimizdeki veriler sadece birbirinden kopuk sayılar yığını olarak kalacaktı.
 
 **2. Label Encoding (Etiket Kodlama)**  
-Container Type ve Recycle gibi metin tabanlı veriler, bilgisayarın anlayabileceği sayısal değerlere dönüştürülmüştür. 14 farklı kategori olduğu için tabloyu şişirmeyen bu yöntem tercih edilmiştir.
+Metin tabanlı veriler, bilgisayarın anlayabileceği sayısal değerlere dönüştürülmüştür. Çok sayıda farklı kategori olduğu için de Label Encoder tercih edilmiştir.
 
 **3. StandardScaler (Ölçeklendirme)**  
-KNN algoritması mesafe tabanlı çalıştığı için, büyük sayısal değerlerin (örn: 90 olan FL_B) küçük değerli etiketleri (örn: 1 olan kategori) domine etmemesi amacıyla tüm özellikler aynı ölçeğe getirilmiştir. Bu adım KNN'in başarısı için zorunludur.
+KNN ve Logistic Regression algoritmaları sayısal büyüklüklere karşı duyarlıdır. Bu nedenle büyük sayısal değerlerin (örn: 90 olan FL_B) küçük değerli etiketleri (örn: 1 olan kategori) domine etmemesi amacıyla tüm özellikler aynı ölçeğe getirilmiştir. Bu adım modellerin adil bir şekilde eğitilmesi için zorunludur.
 
 ---
 
 ## Model Performanslarının Yorumlanması
 
 **K-Nearest Neighbors (KNN)**  
-Mesafe tabanlı bir modeldir. Verilerin ölçeklendirilmesine (Scaling) ihtiyaç duyar. %89 başarı oranıyla güçlü bir performans göstermiş olsa da Random Forest'ın gerisinde kalmıştır.
+%89 başarı oranıyla güçlü bir performans sergilemiştir. Mesafe tabanlı olduğu için scaling işlemi başarısını doğrudan artırmıştır.
 
 **Random Forest Classifier**
-%94 doğruluk oranıyla projenin en başarılı modeli olmuştur.
+%94 doğruluk oranıyla projenin en başarılı modeli olmuştur.Doğrusal olmayan karmaşık sensör ilişkilerini ağaç yapısı sayesinde en iyi o yakalamıştır.
 
-Neden Başarılı? Doğrusal olmayan karmaşık ilişkileri (farklı konteyner ve atık türü kombinasyonları) karar ağaçları yapısı sayesinde en iyi şekilde yakalamıştır. Aykırı değerlere karşı daha dayanıklıdır.
+**Logistic Regression**
+%87 başarı oranıyla temel bir sınıflandırma performansı sunmuştur. Daha basit ve hızlı bir model olmasına rağmen karmaşık verilerde RF'in gerisinde kalmıştır.
 
 ---
 
 ## Genel Değerlendirme
 
 **Model Başarısı**  
-Test sonuçlarına göre Random Forest Classifier modeli, %94 gibi yüksek bir doğruluk oranıyla projenin en güvenilir modeli olmuştur. Bu durum, sensör verilerindeki karmaşık ve doğrusal olmayan ilişkilerin (özellikle geçmiş doluluk verileri ile konteyner tipleri arasındaki bağlantıların) ağaç tabanlı modeller tarafından daha iyi yakalandığını kanıtlamaktadır.
+Test sonuçlarına göre Random Forest Classifier modeli, %94 gibi yüksek bir doğruluk oranıyla projenin en güvenilir modeli olmuştur. Bu durum, sensör verilerindeki karmaşık ve doğrusal olmayan ilişkilerin ağaç tabanlı modeller tarafından daha iyi yakalandığını kanıtlamaktadır.
 
 **Veri Analizi (Pivot) Önemi**  
-Yapılan pivot tablo analizleri, her konteyner tipinin her atık türünde aynı hızda dolmadığını göstermiştir. Örneğin, belirli konteyner tiplerinin "Mixed" atık türünde %70'in üzerinde doluluk ortalamasına ulaştığı gözlemlenmiştir. Bu bilgi, belediyelerin sadece doluluk oranına göre değil, dolma hızına göre de dinamik rota planlaması yapabileceğini ortaya koymaktadır.
+Yapılan pivot tablo analizleri, her konteyner tipinin her atık türünde aynı hızda dolmadığını göstermiştir. Örneğin, belirli konteyner tiplerinin "Mixed" atık türünde %70'in üzerinde doluluk ortalamasına ulaştığı gözlemlenmiştir.
 
 **Özelliklerin Etkisi (Feature Importance)**  
 Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin yanında, geçmişe dönük verilerin de tahmin başarısında kritik rol oynadığı görülmüştür. Bu da sistemin sadece anlık değil, zamansal değişimleri de takip ederek daha tutarlı kararlar verdiğini gösterir.
@@ -108,6 +109,11 @@ Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin 
 ![Random Forest - Karmaşıklık Matrisi (Confusion Matrix)](images/RF_karmaşıklık_matrisi.png)
 
 -Bu matris, modelin nerede hata yaptığını tane tane gösterir. Sol üst ve sağ alt köşedeki büyük sayılar, modelin "Boşaltılmalı" dediği ve gerçekten boşaltılması gereken veya "Boş" dediği ve gerçekten boş olan kutuları temsil eder.
+
+### Özellik Önem Sırası (Feature Importance)
+![Özellik Önem Sırası (Feature Importance)](images/özellik_önem_sırası.png)
+
+- Modelin karar verirken hangi sensör verisine (özelliğe) daha çok güvendiğini gösteren grafiktir.
 
 ---
 
