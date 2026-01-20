@@ -62,8 +62,12 @@ Veri setinde onlarca farklı konteyner tipi bulunuyor. Büyük bir listeye düz 
 **2. Label Encoding (Etiket Kodlama)**  
 Metin tabanlı veriler, bilgisayarın anlayabileceği sayısal değerlere dönüştürülmüştür. Çok sayıda farklı kategori olduğu için de Label Encoder tercih edilmiştir.
 
+![encoder)](images/encoder.png)
+
 **3. StandardScaler (Ölçeklendirme)**  
 KNN ve Logistic Regression algoritmaları sayısal büyüklüklere karşı duyarlıdır. Bu nedenle büyük sayısal değerlerin (örn: 90 olan FL_B) küçük değerli etiketleri (örn: 1 olan kategori) domine etmemesi amacıyla tüm özellikler aynı ölçeğe getirilmiştir. Bu adım modellerin adil bir şekilde eğitilmesi için zorunludur.
+
+![standart_scaler)](images/standart_scaler.png)
 
 ---
 
