@@ -75,12 +75,15 @@ KNN ve Logistic Regression algoritmaları sayısal büyüklüklere karşı duyar
 
 **K-Nearest Neighbors (KNN)**  
 %89 başarı oranıyla güçlü bir performans sergilemiştir. Mesafe tabanlı olduğu için scaling işlemi başarısını doğrudan artırmıştır.
+![KNN_rapor)](images/KNN_rapor.png)
 
 **Random Forest Classifier**
 %94 doğruluk oranıyla projenin en başarılı modeli olmuştur.Doğrusal olmayan karmaşık sensör ilişkilerini ağaç yapısı sayesinde en iyi o yakalamıştır.
+![RF_rapor)](images/RF_rapor.png)
 
 **Logistic Regression**
 %87 başarı oranıyla temel bir sınıflandırma performansı sunmuştur. Daha basit ve hızlı bir model olmasına rağmen karmaşık verilerde RF'in gerisinde kalmıştır.
+![LR_rapor)](images/LR_rapor.png)
 
 ---
 
@@ -88,6 +91,7 @@ KNN ve Logistic Regression algoritmaları sayısal büyüklüklere karşı duyar
 
 **Model Başarısı**  
 Test sonuçlarına göre Random Forest Classifier modeli, %94 gibi yüksek bir doğruluk oranıyla projenin en güvenilir modeli olmuştur. Bu durum, sensör verilerindeki karmaşık ve doğrusal olmayan ilişkilerin ağaç tabanlı modeller tarafından daha iyi yakalandığını kanıtlamaktadır.
+![başarı_skorları)](images/başarı_skorları.png)
 
 **Veri Analizi (Pivot) Önemi**  
 Yapılan pivot tablo analizleri, her konteyner tipinin her atık türünde aynı hızda dolmadığını göstermiştir. Örneğin, belirli konteyner tiplerinin "Mixed" atık türünde %70'in üzerinde doluluk ortalamasına ulaştığı gözlemlenmiştir.
