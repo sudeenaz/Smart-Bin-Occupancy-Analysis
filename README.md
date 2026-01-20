@@ -37,14 +37,16 @@ Kolonlar:
 |-------|-----:|------:|
 | Random Forest Classifier | %94 | En yüksek performans |
 | K-Nearest Neighbors (KNN)| %89 | Yüksek performans (Scaling ile) |
+| Logistic Regression| %87 | Stabil ve hızlı performans |
 
 ---
 
 ## Sonuç ve Model Karşılaştırması
-Bu çalışmada, konteynerlerin boşaltılma durumunu tahmin etmek için iki farklı supervised (denetimli) makine öğrenimi modeli kullanılmıştır:
+Bu çalışmada, konteynerlerin boşaltılma durumunu tahmin etmek için üç farklı supervised (denetimli) makine öğrenimi modeli kullanılmıştır:
 
 - **Random Forest Classifier**  
-- **K-Nearest Neighbors (KNN)**  
+- **K-Nearest Neighbors (KNN)**
+- **Logistic Regression**  
 
 Her model aynı eğitim/test veri seti üzerinde değerlendirilmiş ve doğruluk (accuracy) skorları karşılaştırılmıştır.
 
@@ -59,19 +61,20 @@ Veri setinde onlarca farklı konteyner tipi bulunuyor. Büyük bir listeye düz 
 Metin tabanlı veriler, bilgisayarın anlayabileceği sayısal değerlere dönüştürülmüştür. Çok sayıda farklı kategori olduğu için de Label Encoder tercih edilmiştir.
 
 **3. StandardScaler (Ölçeklendirme)**  
-KNN algoritması mesafe tabanlı çalıştığı için, büyük sayısal değerlerin (örn: 90 olan FL_B) küçük değerli etiketleri (örn: 1 olan kategori) domine etmemesi amacıyla tüm özellikler aynı ölçeğe getirilmiştir. Bu adım KNN'in başarısı için zorunludur.
+KNN ve Logistic Regression algoritmaları sayısal büyüklüklere karşı duyarlıdır. Bu nedenle büyük sayısal değerlerin (örn: 90 olan FL_B) küçük değerli etiketleri (örn: 1 olan kategori) domine etmemesi amacıyla tüm özellikler aynı ölçeğe getirilmiştir. Bu adım modellerin adil bir şekilde eğitilmesi için zorunludur.
 
 ---
 
 ## Model Performanslarının Yorumlanması
 
 **K-Nearest Neighbors (KNN)**  
-Mesafe tabanlı bir modeldir. Verilerin ölçeklendirilmesine (Scaling) ihtiyaç duyar. %89 başarı oranıyla güçlü bir performans göstermiş olsa da Random Forest'ın gerisinde kalmıştır.
+%89 başarı oranıyla güçlü bir performans sergilemiştir. Mesafe tabanlı olduğu için scaling işlemi başarısını doğrudan artırmıştır.
 
 **Random Forest Classifier**
-%94 doğruluk oranıyla projenin en başarılı modeli olmuştur.
+%94 doğruluk oranıyla projenin en başarılı modeli olmuştur.Doğrusal olmayan karmaşık sensör ilişkilerini ağaç yapısı sayesinde en iyi o yakalamıştır.
 
-Doğrusal olmayan karmaşık ilişkileri karar ağaçları yapısı sayesinde en iyi şekilde yakalamıştır. Aykırı değerlere karşı daha dayanıklıdır.
+**Logistic Regression**
+%87 başarı oranıyla temel bir sınıflandırma performansı sunmuştur. Daha basit ve hızlı bir model olmasına rağmen karmaşık verilerde RF'in gerisinde kalmıştır.
 
 ---
 
@@ -106,6 +109,11 @@ Modelin karar mekanizması incelendiğinde, güncel doluluk sensörü verisinin 
 ![Random Forest - Karmaşıklık Matrisi (Confusion Matrix)](images/RF_karmaşıklık_matrisi.png)
 
 -Bu matris, modelin nerede hata yaptığını tane tane gösterir. Sol üst ve sağ alt köşedeki büyük sayılar, modelin "Boşaltılmalı" dediği ve gerçekten boşaltılması gereken veya "Boş" dediği ve gerçekten boş olan kutuları temsil eder.
+
+### Özellik Önem Sırası (Feature Importance)
+![Özellik Önem Sırası (Feature Importance)](images/özellik_önem_sırası.png)
+
+- Modelin karar verirken hangi sensör verisine (özelliğe) daha çok güvendiğini gösteren grafiktir.
 
 ---
 
